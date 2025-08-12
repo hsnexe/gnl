@@ -1,8 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+
 /*   By: hashammo <hashammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 14:45:34 by hashammo          #+#    #+#             */
@@ -12,12 +11,12 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(const char *s)
 {
-	int	len;
+	 size_t len;
 
 	len = 0;
-	while (s)
+	while (s[len])
 		len++;
 	return (len);
 }
@@ -25,7 +24,7 @@ size_t	ft_strlen(char *s)
 char	*ft_strdup(const char *s)
 {
 	char	*newp;
-	int		i;
+	size_t		i;
 
 	if (!s)
 		return (NULL);
@@ -44,17 +43,17 @@ char	*ft_strdup(const char *s)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	news_len;
 	char	*news;
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+    if (!s2)
+            return(NULL);
 	j = 0;
 	i = 0;
-	news_len = ft_strlen(s1) + ft_strlen(s2);
-	news = malloc(news_len + 1);
+	news = malloc((ft_strlen(s1) +ft_strlen(s2) + 1) * sizeof(char));
 	if (!news)
 		return (NULL);
 	while (s1[i])
@@ -68,24 +67,23 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	news[i + j] = '\0';
+ //   free(s1);
 	return (news);
 }
 
-
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	if ((char)(c) == '\0')
-		return ((char *) &s[i]);
-	return (NULL);
+    if(!s)
+        return (NULL);
+    while(*s)
+    {
+        if(*s == (char)c)
+               return((char *)s);
+         s++;
+    }
+    if(c== '\0')
+        return ((char *)s);
+    return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
