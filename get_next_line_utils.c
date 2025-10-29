@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: hashammo <hashammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 14:45:34 by hashammo          #+#    #+#             */
-/*   Updated: 2025/08/02 15:45:51 by hashammo         ###   ########.fr       */
+/*   Created: 2025/08/13 12:00:36 by hashammo          #+#    #+#             */
+/*   Updated: 2025/08/19 14:37:43 by hashammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -13,7 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
-	 size_t len;
+	size_t	len;
 
 	len = 0;
 	while (s[len])
@@ -24,7 +25,7 @@ size_t	ft_strlen(const char *s)
 char	*ft_strdup(const char *s)
 {
 	char	*newp;
-	size_t		i;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
@@ -41,16 +42,15 @@ char	*ft_strdup(const char *s)
 	return (newp);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*news;
 	size_t	i;
 	size_t	j;
 
-	if (!s1 && s2)
-		return (ft_strdup(s2));
-    if (!s2)
-            return(NULL);
+	news = join_help(s1, s2);
+	if (news)
+		return (news);
 	j = 0;
 	i = 0;
 	news = malloc((ft_strlen(s1) +ft_strlen(s2) + 1) * sizeof(char));
@@ -67,23 +67,23 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	news[i + j] = '\0';
- //   free(s1);
+	free(s1);
 	return (news);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
-    if(!s)
-        return (NULL);
-    while(*s)
-    {
-        if(*s == (char)c)
-               return((char *)s);
-         s++;
-    }
-    if(c== '\0')
-        return ((char *)s);
-    return (NULL);
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
